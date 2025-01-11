@@ -1,0 +1,95 @@
+{%extends "talk/base.html"%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>AI Prompt Interface</title>
+      <style>
+    body {
+        font-family: 'Arial', sans-serif; /* Clean and standard font */
+        background-color: #f4f4f4;      /* Light grey background */
+        margin: 0;                      /* Remove default margins */
+        display: flex;                   /* Use flexbox to center content */
+        justify-content: center;       /* Center horizontally */
+        align-items: center;            /* Center vertically */
+        min-height: 100vh;              /* Ensure full viewport height */
+    }
+
+    .container {
+        background-color: #fff;       /* White container background */
+        padding: 30px;                /* Generous padding around content */
+        border-radius: 8px;          /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        width: 80%;                   /* Set container width for larger screens */
+        max-width: 600px;              /* Limit width on very large screens */
+        text-align: center;
+    }
+
+    h1 {
+        color: #333;                /* Dark grey heading color */
+        margin-bottom: 20px;         /* Space below the heading */
+    }
+
+    .prompt-area {
+        margin-bottom: 20px;          /* Space below the input area */
+    }
+
+    input[type="text"] {
+        padding: 12px 15px;           /* Input padding */
+        border: 1px solid #ddd;     /* Light border */
+        border-radius: 4px;         /* Rounded input corners */
+        width: calc(100% - 32px);    /* Adjust width with padding */
+        box-sizing: border-box;      /* Include padding and border in the element's total width and height */
+        margin-bottom: 10px;
+        font-size: 16px;           /* Input text size */
+        outline: none;              /* Remove focus outline */
+    }
+
+    input[type="text"]:focus {
+        border-color: #007bff; /* Blue border on focus */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* Highlight with a soft blue shadow when focused */
+    }
+
+    .response-area {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        text-align: left;
+        margin-top: 20px;
+        color: #555;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+        .container {
+            width: 95%; /* Adjust for smaller screens */
+            padding: 20px; /* Less padding on smaller screens */
+        }
+    }
+</style>
+</head>
+{% block content %}
+<body>
+    <div class="container">
+        <h1>Ask me Anything!</h1>
+        <div class="prompt-area">
+            <form method="post"  hx-post="." hx-target="#responseArea" hx-swap="innerHTML" >
+               {% csrf_token %}
+               {{ form.as_p }}
+               <button type="submit" > Ask </button>
+            </form>
+        </div>
+        <div class="response-area" id="responseArea">
+            <p>{{ai_response}}</p>
+        </div>
+    </div>
+     <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9rhin1GjH55nxu/0qb8mG/n9R76ztK1Tk7mkss" crossorigin="anonymous"></script>
+      <script>
+        document.addEventListener('htmx:afterSwap', function(evt) {
+            console.log('response loaded',evt)
+        });
+      </script>
+</body>
+{% endblock %}

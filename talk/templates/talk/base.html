@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hello Jajoul{% endblock %}</title>
+  {% block style %}
+  <style>
+      body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        header {
+          background-color: #333;
+          color: #fff;
+          padding: 10px 0;
+        }
+
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+         .logo {
+           font-size: 2em;
+         }
+
+        nav ul {
+          list-style: none;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          margin: 0;
+        }
+
+        nav li {
+          margin: 0 15px;
+         }
+
+        nav a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: bold;
+          transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+          color: #bbb;
+        }
+
+          main {
+              flex: 1;
+             display: flex;
+             flex-direction: column;
+              align-items: center;
+              justify-content: center;
+          }
+
+        .container {
+            background-color: #fff;
+           padding: 30px;
+            border-radius: 8px;
+           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          width: 80%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 20px;
+          }
+
+          h1 {
+             color: #333;
+             margin-bottom: 20px;
+           }
+
+          .prompt-area {
+              margin-bottom: 20px;
+            }
+
+         input[type="text"] {
+             padding: 12px 15px;
+             border: 1px solid #ddd;
+            border-radius: 4px;
+              width: calc(100% - 32px);
+             box-sizing: border-box;
+            margin-bottom: 10px;
+              font-size: 16px;
+             outline: none;
+          }
+
+        input[type="text"]:focus {
+              border-color: #007bff;
+             box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            }
+
+         .response-area {
+             background-color: #f9f9f9;
+             padding: 15px;
+             border: 1px solid #eee;
+            border-radius: 4px;
+             text-align: left;
+            margin-top: 20px;
+            color: #555;
+             min-height: 50px;
+            position: relative;
+           }
+
+          .loading-indicator {
+              position: absolute;
+              top: 50%;
+               left: 50%;
+             transform: translate(-50%, -50%);
+              display: none;
+            }
+
+           .loading-indicator.active {
+               display: inline-block;
+               border: 4px solid #f3f3f3;
+               border-top: 4px solid #3498db;
+              border-radius: 50%;
+                width: 20px;
+                height: 20px;
+              animation: spin 1s linear infinite;
+             }
+         @keyframes spin {
+               0% { transform: translate(-50%,-50%) rotate(0deg); }
+             100% { transform: translate(-50%,-50%) rotate(360deg); }
+          }
+         button[type="submit"] {
+             padding: 12px 20px;
+            background-color: #007bff;
+              color: #fff;
+            border: none;
+            border-radius: 4px;
+             cursor: pointer;
+             font-size: 16px;
+             transition: background-color 0.3s ease;
+          }
+
+       button[type="submit"]:hover {
+         background-color: #0056b3;
+           }
+
+         button[type="submit"]:focus {
+              outline: none;
+             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+         footer {
+              background-color: #333;
+             color: #fff;
+            text-align: center;
+            padding: 15px 0;
+           }
+           footer a {
+    color: #A9BFA8; /* Set the a tag color to white */
+    text-decoration: none;  /* optional: remove default underline */
+}
+
+            /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+               width: 95%;
+                padding: 20px;
+             }
+           nav {
+                flex-direction: column;
+               align-items: flex-start;
+              }
+          nav ul {
+             flex-direction: column;
+               align-items: flex-start;
+               margin-top: 10px;
+            }
+          nav li {
+               margin: 5px 0;
+            }
+       }
+ </style>
+ {% endblock %}
+</head>
+<body>
+   <header>
+      <nav>
+            <div class="logo">Hello Jajoul</div>
+            <ul>
+                <li><a href="https://www.jajoul.me">Jajoul.me</a></li>
+                <li><a href="{% url 'talk'%}">Talk</a></li>
+                <li><a href="#donate">Donate</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+   <footer>
+       <p>© 2025 Hello Jajoul By <a href="https://www.jajoul.me">Jajoul</a> . All rights reserved.</p>
+    </footer>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9rhin1GjH55nxu/0qb8mG/n9R76ztK1Tk7mkss" crossorigin="anonymous"></script>
+     <script>
+         document.body.addEventListener('htmx:afterSwap', function(event) {
+               const responseArea = document.getElementById('responseArea');
+              responseArea.querySelector('p').style.display = "block";
+              });
+    </script>
+</body>
+</html>
